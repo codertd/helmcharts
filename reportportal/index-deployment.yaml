@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: index
+  name: index
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: index
+    spec:
+      containers:
+      - env:
+        - name: RP_PROXY_CONSUL
+          value: "true"
+        - name: RP_SERVER_PORT
+          value: "8080"
+        image: reportportal/service-index:4.2.0
+        name: index
+        resources: {}
+      restartPolicy: Always
+status: {}

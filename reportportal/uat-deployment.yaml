@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: uat
+  name: uat
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: uat
+    spec:
+      containers:
+      - env:
+        - name: RP_MONGO_URI
+          value: mongodb://mongouser:mongouser123@mongodb-rp:27017/reportportal?authSource=reportportal123
+        - name: RP_PROFILES
+          value: docker
+        - name: RP_SESSION_LIVE
+          value: "86400"
+        image: reportportal/service-authorization:4.2.0
+        name: uat
+        resources: {}
+      restartPolicy: Always
+status: {}
