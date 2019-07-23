@@ -24,10 +24,16 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.env }}
           env:
-            {{ toYaml .Values.env | indent 12 }}
-          {{- end }}          
+            - name: JAVA_OPTS
+              value: -Xmx1g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp
+            - name: RP_MONGO_URI
+              value: mongodb://mongorpuser:5jdk!ks23@rp-mongodb:27017/reportportal
+            - name: RP_PROFILES
+              value: docker    
+              
+# value: mongodb://mongorpuser:5jdk!ks23@rp-mongodb:27017/reportportal?authSource=reportportal              
+                    
           ports:
             - name: http
               containerPort: 80

@@ -5,8 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  #repository: reportportal/service-api:4.3.4
+  #tag: stable
+  repository: gcr.io/kcluster-225309/rp-consul
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

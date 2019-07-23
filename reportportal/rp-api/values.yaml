@@ -5,8 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: reportportal/service-api:4.3.4
-  tag: stable
+  #repository: reportportal/service-api:4.3.4
+  #tag: stable
+  repository: gcr.io/kcluster-225309/rp-api
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -21,9 +23,11 @@ env:
   - name: JAVA_OPTS
     value: -Xmx1g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp
   - name: RP_MONGO_URI
-    value: mongodb://mongouser:mongouser123@mongodb-rp:27017/reportportal?authSource=reportportal123
+    value: mongodb://mongoadminuser:1s9xs0k3sa@mongodb-rp:27017/reportportal?authSource=reportportal123
   - name: RP_PROFILES
     value: docker
+
+# value: mongodb://mongouser:mongouser123@mongodb-rp:27017/reportportal?authSource=reportportal123
 
 ingress:
   enabled: false
