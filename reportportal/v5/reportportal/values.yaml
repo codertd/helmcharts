@@ -1,0 +1,124 @@
+serviceindex:
+  repository: gcr.io/kcluster-225309/service-index
+  tag: 5.0.1
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 150m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+uat:
+  repository: gcr.io/kcluster-225309/service-authorization
+  tag: latest
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 512Mi
+  sessionLiveTime: 86400
+
+serviceui:
+  repository: gcr.io/kcluster-225309/service-ui
+  tag: latest
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+serviceapi:
+  repository: gcr.io/kcluster-225309/service-api
+  tag: latest
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 200m
+      memory: 1000Mi
+    limits:
+      cpu: 300m
+      memory: 1500Mi
+
+migrations:
+  repository: gcr.io/kcluster-225309/migrations
+  tag: 5.0.0-BETA-6
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+serviceanalyzer:
+  repository: gcr.io/kcluster-225309/service-analyzer
+  tag: 5.0.0-BETA-1
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+postgresql:
+  SecretName: "postgresql-password"
+  installdep:
+    enable: false
+  endpoint:
+    external: true
+    address: postgresql-postgresql.default.svc.cluster.local
+    port: 5432
+    user: rpuser
+    dbName: reportportal
+
+rabbitmq:
+  SecretName: "rabbitmq-password"
+  installdep:
+    enable: false
+  endpoint: 
+    external: true
+    address: mq-rabbitmq-ha.default.svc.cluster.local
+    port: 5672
+    user: rabbitmq
+    apiport: 15672
+    apiuser: rabbitmq
+
+elasticsearch:
+  installdep:
+    enable: false
+  endpoint:
+    external: true
+    address: elasticsearch-client.default.svc
+    port: 9200
+
+# ingress configuration for the ui
+# If you have installed ingress controller and want to expose application - set INGRESS.ENABLE to true.
+# If you have some domain name set INGRESS.USEDOMAINNAME variable to true and set this fqdn to INGRESS.HOSTS
+# If you don't have any domain names - set INGRESS.USEDOMAINNAME to false
+ingress:
+  enable: true
+  # IF YOU HAVE SOME DOMAIN NAME SET INGRESS.USEDOMAINNAME to true
+  usedomainname: false
+  hosts:
+    - reportportal.k8.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+
+# node selector for all components, if any
+nodeSelector:
+  enabled: false
+  selector:
+    reportportal: true
