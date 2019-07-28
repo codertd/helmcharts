@@ -107,14 +107,14 @@ elasticsearch:
     enable: false
   endpoint:
     external: true
-    address: elasticsearch-client
+    address: elasticsearch-client.default.svc.cluster.local
     port: 9200
 mongodb:
   installdep:
     enable: false
   endpoint: 
     external: true
-    address: "mongodb"
+    address: "rpmongo-mongodb.default.svc.cluster.local"
     port: 27017
     username: "rpuser"
     dbname: "reportportal"
@@ -133,8 +133,10 @@ ingress:
     - reportportal.k8.com
   annotations:
     kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.global-static-ip-name: reportportal-ingress
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/rewrite-target: /
+    
 
 # node selector for all components, if any
 nodeSelector:
