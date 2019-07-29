@@ -133,9 +133,10 @@ ingress:
     - reportportal.k8.com
   annotations:
     kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: gce
     # kubernetes.io/ingress.global-static-ip-name: reportportal-ingress
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
     
 
 # node selector for all components, if any
