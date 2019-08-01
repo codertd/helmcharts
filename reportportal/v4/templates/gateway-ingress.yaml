@@ -20,7 +20,7 @@ spec:
 {{ else }}
   - http:
       paths:
-      - path: /
+      - path: /*
         backend:
 {{ end }}
           serviceName: gateway
@@ -32,3 +32,61 @@ status:
 {{ toYaml .Values.ingress.tls | indent 4 }}
 {{- end -}}
 {{- end }}
+
+### This is the working YAML
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     ingress.kubernetes.io/backends: '{"k8s-be-30460--2a03ccd05f458139":"HEALTHY"}'
+#     ingress.kubernetes.io/forwarding-rule: k8s-fw-default-reportportal-ingress--2a03ccd05f458139
+#     ingress.kubernetes.io/target-proxy: k8s-tp-default-reportportal-ingress--2a03ccd05f458139
+#     ingress.kubernetes.io/url-map: k8s-um-default-reportportal-ingress--2a03ccd05f458139
+#   creationTimestamp: 2019-08-01T20:48:50Z
+#   generation: 1
+#   name: reportportal-ingress
+#   namespace: default
+#   resourceVersion: "49726"
+#   selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/reportportal-ingress
+#   uid: c4079027-b49d-11e9-8b98-42010a8001d4
+# spec:
+#   backend:
+#     serviceName: gateway
+#     servicePort: admin
+#   rules:
+#   - host: reportportal.k8.com
+#     http:
+#       paths:
+#       - backend:
+#           serviceName: gateway
+#           servicePort: admin
+#         path: /ui
+# status:
+#   loadBalancer:
+#     ingress:
+#     - ip: 34.98.120.195
+
+###
+# Added a custom health check and set it to the backend service
+# k8s-be-30460--2a03ccd05f458139
+# In use by
+# k8s-be-30460--2a03ccd05f458139
+# Description
+# Default kubernetes L7 Loadbalancing health check.
+
+# Path
+# /ui/
+# Protocol
+# HTTP
+# Port
+# 30460
+# Proxy protocol
+# NONE
+# Interval
+# 60 seconds
+# Timeout
+# 60 seconds
+# Unhealthy threshold
+# 10 consecutive failures
+# Healthy threshold
+# 1 success
